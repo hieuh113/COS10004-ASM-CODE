@@ -1,0 +1,61 @@
+      MOV R12, #NameMsg
+      MOV R11, #Name
+      MOV R9, #Num
+      MOV R4, #MatchRem
+      STR R12, .WriteString
+      STR R11, .ReadString
+      MOV R10, #MatchstickMsg
+MatchstickAmount:
+      STR R10, .WriteString
+      LDR R9, .InputNum
+      CMP R9, #5
+      BLT MatchstickAmount
+      CMP R9, #100
+      BGT MatchstickAmount
+Game:
+      MOV R12, #PlayerMsg
+      STR R12, .WriteString
+      STR R11, .WriteString
+      MOV R10, #MatchMsg
+      STR R10, .WriteString
+      STR R9, .WriteUnsignedNum
+      MOV R8, #PlayerMsg2
+      STR R8, .WriteString
+      STR R11, .WriteString
+      MOV R7, #InfoMsg1
+      MOV R6, #InfoMsg2
+      STR R7, .WriteString
+      STR R9, .WriteUnsignedNum
+      STR R6, .WriteString
+StickRemove:
+      STR R8, .WriteString
+      STR R11, .WriteString
+      MOV R5, #MatchStickMsg2
+      STR R5, .WriteString
+      LDR R4, .InputNum
+      CMP R4, #1
+      BLT StickRemove
+      CMP R4, #3
+      BGT StickRemove
+      CMP R4, R9
+      BGT StickRemove
+      SUB R9, R9, R4
+      CMP R9, #0
+      BGT Game
+GameOver:
+      MOV R12, #GameOv
+      STR R12, .WriteString
+      HALT
+Name: .BLOCK 128
+Num:  .BLock 128
+MatchRem: .BLOCK 128
+NameMsg:.ASCIZ "\nPlease enter your name: "
+MatchstickMsg:.ASCIZ "\nHow many matchsticks (5-100)? "
+PlayerMsg: .ASCIZ "\nPlayer is: "
+MatchMsg: .ASCIZ "\nMatchsticks: "
+PlayerMsg2: .ASCIZ "\nPlayer "
+InfoMsg1: .ASCIZ ", there are " 
+InfoMsg2: .ASCIZ " Matchsticks Remaining"
+MatchStickMsg2:.ASCIZ ", How many do you want to remove(1-3)?"
+GameOv: .ASCIZ "\nGame Over"
+; Stage 2 HUYNH QUOC HIEU SWH01668
