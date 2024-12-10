@@ -1,0 +1,27 @@
+      MOV R12, #NameMsg
+      MOV R11, #Name
+      MOV R9, #Num
+      STR R12, .WriteString
+      STR R11, .ReadString
+      MOV R10, #MatchstickMsg
+MatchstickAmount:
+      STR R10, .WriteString
+      LDR R9, .InputNum
+      CMP R9, #5
+      BLT MatchstickAmount
+      CMP R9, #100
+      BGT MatchstickAmount
+      MOV R12, #PlayerMsg
+      STR R12, .WriteString
+      STR R11, .WriteString
+      MOV R10, #MatchMsg
+      STR R10, .WriteString
+      STR R9, .WriteUnsignedNum
+      HALT
+Name: .BLOCK 128
+Num:  .BLock 128
+NameMsg:.ASCIZ "\nPlease enter your name: "
+MatchstickMsg:.ASCIZ "\nHow many matchsticks (5-100)? "
+PlayerMsg: .ASCIZ "\nPlayer is: "
+MatchMsg: .ASCIZ "\nMatchsticks: "
+; STAGE 1 HUYNH QUOC HIEU SWH01668
