@@ -1,0 +1,106 @@
+      MOV R12, #NameMsg
+      MOV R11, #Name
+      MOV R9, #Num
+      MOV R4, #MatchRem
+      STR R12, .WriteString
+      STR R11, .ReadString
+      MOV R10, #MatchstickMsg
+PlayAgainLoop:
+      STR R10, .WriteString
+      LDR R9, .InputNum
+      CMP R9, #5
+      BLT PlayAgainLoop
+      CMP R9, #100
+      BGT PlayAgainLoop
+Game:
+      MOV R12, #PlayerMsg
+      STR R12, .WriteString
+      STR R11, .WriteString
+      MOV R10, #MatchMsg
+      STR R10, .WriteString
+      STR R9, .WriteUnsignedNum
+      MOV R8, #PlayerMsg2
+      STR R8, .WriteString
+      STR R11, .WriteString
+      MOV R7, #InfoMsg1
+      MOV R6, #InfoMsg2
+      STR R7, .WriteString
+      STR R9, .WriteUnsignedNum
+      STR R6, .WriteString
+PlayerTurn:
+      STR R8, .WriteString
+      STR R11, .WriteString
+      MOV R5, #MatchStickMsg2
+      STR R5, .WriteString
+      LDR R4, .InputNum
+      CMP R4, #1
+      BLT PlayerTurn
+      CMP R4, #3
+      BGT PlayerTurn
+      CMP R4, R9
+      BGT PlayerTurn
+      SUB R9, R9, R4
+      STR R5, .WriteString
+      STR R9, .WriteUnsignedNum
+      CMP R9, #0
+      BEQ PlayerWins
+ComputerTurn:
+      STR R8, .WriteString
+      MOV R5, #computerchose
+      STR R5, .WriteString
+ComputerChoice:
+      LDR R7, .Random
+      AND R7, R7, #3
+      CMP R7, #1
+      BLT ComputerChoice
+      CMP R7, R9
+      BGT ComputerChoice
+      STR R7, .WriteSignedNum
+      SUB R9, R9, R7
+      STR R5, .WriteString
+      STR R9, .WriteUnsignedNum
+      CMP R9, #0
+      BEQ ComputerWins
+      B Game
+PlayerWins:
+      MOV R1, #playerw
+      STR R1, .WriteString
+      B PlayAgain
+ComputerWins:
+      MOV R1, #computerw
+      STR R1, .WriteString
+      B PlayAgain
+PlayAgain:
+      MOV R1, #playagainmsg
+      STR R1, .WriteString
+      LDR R2, .InputNum 
+      CMP R2, #1
+      BEQ PlayAgainLoop 
+      CMP R2, #2
+      BEQ GameEnd 
+      B PlayAgain 
+GameEnd:
+      MOV R1, #gw
+      STR R1, .WriteString
+      HALT
+Name: .BLOCK 128
+Num:  .BLock 128
+MatchRem: .BLOCK 128
+NameMsg:.ASCIZ "\nPlease enter your name: "
+MatchstickMsg:.ASCIZ "\nHow many matchsticks (5-100)? "
+PlayerMsg: .ASCIZ "\nPlayer is: "
+MatchMsg: .ASCIZ "\nMatchsticks: "
+PlayerMsg2: .ASCIZ "\nPlayer "
+InfoMsg1: .ASCIZ ", there are " 
+InfoMsg2: .ASCIZ " Matchsticks Remaining"
+MatchStickMsg2:.ASCIZ ", How many do you want to remove(1-3)?"
+GameOv: .ASCIZ "\nGame Over"
+remaining: .ASCIZ " Remaining\n"
+userinput: .ASCIZ "How many do you want to remove (1 - 3)? "
+validationcheck: .ASCIZ "\nPlease enter a number from 1 to 3:"
+computerchose: .ASCIZ "Computer Chose: " 
+computerw: .ASCIZ "\nYou Lose! Computer Wins" 
+playerw: .ASCIZ "\nYou Win!"
+gw:   .ASCIZ "\nGame Over."
+playagainmsg: .ASCIZ "\nPlay again (y:1/n:2)? "
+; STAGE 3 HUYNH QUOC HIEU SWH01668
